@@ -77,6 +77,11 @@ public class CurrentAccount extends BankAccount{
                     }
                 }
             }
+            StringBuilder sb = new StringBuilder();
+            for(char ch : arr) {
+                sb.append(ch);
+            }
+            this.tradeLicenseId = sb.toString();
         } else {
             throw new ValidLicenseCanNotBeGenerated();
         }
