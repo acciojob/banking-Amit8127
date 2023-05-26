@@ -1,10 +1,14 @@
 package com.driver;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Getter
+@Setter
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
     private static final double minBalance = 5000;
