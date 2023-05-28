@@ -29,10 +29,10 @@ public class CurrentAccount extends BankAccount{
     private boolean isIdValid(String id) {
         for(int i = 1; i < id.length(); i++) {
             if(id.charAt(i) == id.charAt(i-1)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void validateLicenseId() throws ValidLicenseCanNotBeGenerated {
