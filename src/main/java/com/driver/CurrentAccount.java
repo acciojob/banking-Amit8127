@@ -51,57 +51,55 @@ public class CurrentAccount extends BankAccount{
     }
 
     private String generateNewTradeLicenseId(String tradeLicenseId) {
-        int size = tradeLicenseId.length();
-        char[] arr = new char[size];
-        Map<Character, Integer> freqMap = new HashMap<>();
-        int maxFreq = 0;
-        for (char c : tradeLicenseId.toCharArray()) {
-            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
-        }
-        for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {
-            maxFreq = Math.max(maxFreq, entry.getValue());
+        int n = tradeLicenseId.length();
+
+        Map<Character, Integer> count = new HashMap<>();
+        for (char ch : tradeLicenseId.toCharArray()) {
+            count.put(ch, count.getOrDefault(ch, 0) + 1);
         }
 
-        int filling = 0;
-        int index = 0;
-        boolean flag = true;
-        if (rearranging(maxFreq)) {
-            for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {
-                int freq = entry.getValue();
-                char c = entry.getKey();
-                int i = 0;
-                if (filling == 0) {
-                    for (i = 0; i < freq && index < size; i++) {
-                        arr[index] = c;
-                        index += 2;
-                        if (i >= size || index >= size) {
-                            index = 1;
-                            filling = 1;
-                        }
-                    }
-                }
-                if (filling == 1) {
-                    for (; i < freq && index < size; i++) {
-                        arr[index] = entry.getKey();
-                        index += 2;
-                    }
-                }
+        char ch_max = getCountChar(count);
+        int maxCount = count.get(ch_max);
+
+        if (maxCount > (n + 1) / 2) {
+            return "";
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            res.append(' ');
+        }
+
+        int ind = 0;
+        while (maxCount > 0) {
+            res.setCharAt(ind, ch_max);
+            ind += 2;
+            maxCount--;
+        }
+
+        count.remove(ch_max);
+        for (char ch : count.keySet()) {
+            int freq = count.get(ch);
+            while (freq > 0) {
+                ind = (ind >= n) ? 1 : ind;
+                res.setCharAt(ind, ch);
+                ind += 2;
+                freq--;
             }
         }
-        StringBuilder sb = new StringBuilder();
-        for(char ch : arr) {
-            sb.append(ch);
-        }
-        return sb.toString();
+
+        return res.toString();
     }
 
-    private Boolean rearranging(int maxFreq) {
-        int size = tradeLicenseId.length();
-        if(size % 2 == 0) {
-            int temp = size / 2;
-            return temp >= maxFreq;
+    private char getCountChar(Map<Character, Integer> count) {
+        char maxFreqChar = ' ';
+        int maxCount = Integer.MIN_VALUE;
+        for (char ch : count.keySet()) {
+            if (count.get(ch) > maxCount) {
+                maxFreqChar = ch;
+                maxCount = count.get(ch);
+            }
         }
-        int temp = (size + 1)/2;
-        return temp > maxFreq;
+        return maxFreqChar;
     }
 }
