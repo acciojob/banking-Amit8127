@@ -7,7 +7,7 @@ public class SavingsAccount extends BankAccount{
 
     public SavingsAccount(String name, double balance, double maxWithdrawalLimit, double rate) {
         // minimum balance is 0 by default
-        super(name, balance,minBalance);
+        super(name, balance, minBalance);
         this.rate = rate;
         this.maxWithdrawalLimit = maxWithdrawalLimit;
     }
@@ -18,30 +18,19 @@ public class SavingsAccount extends BankAccount{
         // 2. "Insufficient Balance" : If the amount exceeds balance
         if(amount > maxWithdrawalLimit) {
             throw new MaximumWithdrawLimitException();
+        } else {
+            super.withdraw(amount);
         }
-        if(super.getBalance() < amount) {
-            throw new InsufficientBalanceException();
-        }
-        super.withdraw(amount);
     }
 
     public double getSimpleInterest(int years){
         // Return the final amount considering that bank gives simple interest on current amount
-        double simpleInterest=((super.getBalance() * this.rate) / 100) * years;
-        return simpleInterest + super.getBalance();
+        return super.getBalance() * (1 + (rate * years)/100);
     }
 
     public double getCompoundInterest(int times, int years){
         // Return the final amount considering that bank gives compound interest on current amount given times per year
-        int month = years * 12;
-        int  noOfTimes = month / times;
-        double finalBalance = super.getBalance();
-
-        for(int i = 1; i < noOfTimes; i++){
-            double interest = (finalBalance * this.rate) / (double) 100;
-            finalBalance += interest;
-        }
-        return finalBalance;
+        return super.getBalance() * Math.pow((1 + rate / (100 * times)), times * years);
     }
 
     public double getRate() {
