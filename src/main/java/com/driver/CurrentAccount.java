@@ -40,6 +40,17 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
+        if(isIdValid(tradeLicenseId)) {
+            String newTradeLicenseId = generateNewTradeLicenseId(tradeLicenseId);
+            if(newTradeLicenseId.isEmpty()) {
+                throw new ValidLicenseCanNotBeGenerated();
+            } else {
+                this.tradeLicenseId = newTradeLicenseId;
+            }
+        }
+    }
+
+    private String generateNewTradeLicenseId(String tradeLicenseId) {
         int size = tradeLicenseId.length();
         char[] arr = new char[size];
         Map<Character, Integer> freqMap = new HashMap<>();
@@ -76,15 +87,14 @@ public class CurrentAccount extends BankAccount{
                     }
                 }
             }
-            StringBuilder sb = new StringBuilder();
-            for(char ch : arr) {
-                sb.append(ch);
-            }
-            this.tradeLicenseId = sb.toString();
-        } else {
-            throw new ValidLicenseCanNotBeGenerated();
         }
+        StringBuilder sb = new StringBuilder();
+        for(char ch : arr) {
+            sb.append(ch);
+        }
+        return sb.toString();
     }
+
     private Boolean rearranging(int maxFreq) {
         int size = tradeLicenseId.length();
         if(size % 2 == 0) {
@@ -94,5 +104,4 @@ public class CurrentAccount extends BankAccount{
         int temp = (size + 1)/2;
         return temp > maxFreq;
     }
-
 }
