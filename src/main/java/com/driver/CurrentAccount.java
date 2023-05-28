@@ -1,17 +1,21 @@
 package com.driver;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
+
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
     private static final double minBalance = 5000;
+
+    public String getTradeLicenseId() {
+        return tradeLicenseId;
+    }
+
+    public void setTradeLicenseId(String tradeLicenseId) {
+        this.tradeLicenseId = tradeLicenseId;
+    }
 
     public CurrentAccount(String name, double balance, String tradeLicenseId) throws InsufficientBalanceException {
         // minimum balance is 5000 by default. If balance is less than 5000, throw "Insufficient Balance" exception
@@ -95,4 +99,5 @@ public class CurrentAccount extends BankAccount{
         int temp = (size + 1)/2;
         return temp > maxFreq;
     }
+
 }

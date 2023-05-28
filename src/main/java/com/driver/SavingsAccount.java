@@ -1,10 +1,5 @@
 package com.driver;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class SavingsAccount extends BankAccount{
     double rate;
     double maxWithdrawalLimit;
@@ -49,4 +44,19 @@ public class SavingsAccount extends BankAccount{
         return finalBalance;
     }
 
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public double getMaxWithdrawalLimit() {
+        return maxWithdrawalLimit;
+    }
+
+    public void setMaxWithdrawalLimit(double maxWithdrawalLimit) {
+        this.maxWithdrawalLimit = maxWithdrawalLimit;
+    }
 }

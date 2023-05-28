@@ -49,20 +49,18 @@ public class BankAccount {
         //If it is not possible, throw "Account Number can not be generated" exception
         if (digits < 1 || sum < 0 || sum > 9 * digits) {
             throw new AccountNumberCanNotBeGenerated();
+        } else {
+            StringBuilder accountNumber = new StringBuilder();
+            int remainingSum = sum;
+
+            for (int i = 0; i < digits - 1; i++) {
+                int digit = Math.min(remainingSum, 9);
+                accountNumber.append(digit);
+                remainingSum -= digit;
+            }
+            accountNumber.append(remainingSum);
+            return accountNumber.toString();
         }
-
-        StringBuilder accountNumber = new StringBuilder();
-        int remainingSum = sum;
-
-        for (int i = 0; i < digits - 1; i++) {
-            int digit = Math.min(remainingSum, 9);
-            accountNumber.append(digit);
-            remainingSum -= digit;
-        }
-
-        accountNumber.append(remainingSum);
-
-        return accountNumber.toString();
     }
 
     public void deposit(double amount) {

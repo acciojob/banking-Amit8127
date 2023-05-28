@@ -1,7 +1,7 @@
 package com.driver;
 
-public class AccountNumberCanNotBeGenerated extends Exception{
+public class AccountNumberCanNotBeGenerated extends RuntimeException{
     public AccountNumberCanNotBeGenerated() {
-        super("Account Number cannot be generated");
+        super("Account Number can not be generated");
     }
 }
